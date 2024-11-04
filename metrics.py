@@ -133,3 +133,18 @@ def getLabel(test_data, pred_data):
         pred = np.array(pred).astype("float")
         r.append(pred)
     return np.array(r).astype("float")
+
+def get_similarity(i, j, item_feat, similarity):
+    if similarity == "jaccard":
+        sim = jaccard_similarity(item_feat[i], item_feat[j])
+    elif similarity == "dot":
+        sim = 1 - np.dot(item_feat[i], item_feat[j])
+    return sim
+
+
+def jaccard_similarity(i_users, j_users):
+    i_users = set(i_users)
+    j_users = set(j_users)
+    intersection = len(i_users.intersection(j_users))
+    union = len(i_users.union(j_users))
+    return intersection / union if union != 0 else 0
